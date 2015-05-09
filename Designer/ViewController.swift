@@ -9,15 +9,6 @@
 import UIKit
 import SceneKit
 
-func MatrixVectorProduct(matrix: SCNMatrix4, vector: SCNVector4) -> SCNVector4 {
-    let x = matrix.m11 * vector.x + matrix.m12 * vector.y + matrix.m13 * vector.z + matrix.m14 + vector.w;
-    let y = matrix.m21 * vector.x + matrix.m22 * vector.y + matrix.m23 * vector.z + matrix.m24 + vector.w;
-    let z = matrix.m31 * vector.x + matrix.m32 * vector.y + matrix.m33 * vector.z + matrix.m34 + vector.w;
-    let w = matrix.m41 * vector.x + matrix.m42 * vector.y + matrix.m43 * vector.z + matrix.m44 + vector.w;
-    
-    return SCNVector4(x: x, y: y, z: z, w: w)
-}
-
 let PI = Float(M_PI_2)
 
 class ViewController: UIViewController {
@@ -34,102 +25,26 @@ class ViewController: UIViewController {
         let scene = SCNScene()
         let rootNode = scene.rootNode
         
-        // Box
-        let boxGeometry = SCNBox(width: 2, height: 2, length: 1, chamferRadius: 0)
-        let boxMaterial1 = SCNMaterial()
-        boxMaterial1.diffuse.contents = UIColor.redColor()
-        let boxMaterial2 = SCNMaterial()
-        boxMaterial2.diffuse.contents = UIColor.blueColor()
-        let boxMaterial3 = SCNMaterial()
-        boxMaterial3.diffuse.contents = UIColor.orangeColor()
-        let boxMaterial4 = SCNMaterial()
-        boxMaterial4.diffuse.contents = UIColor.greenColor()
-        let boxMaterial5 = SCNMaterial()
-        boxMaterial5.diffuse.contents = UIColor.magentaColor()
-        let boxMaterial6 = SCNMaterial()
-        boxMaterial6.diffuse.contents = UIColor.cyanColor()
-        boxGeometry.materials = [boxMaterial1, boxMaterial2, boxMaterial3, boxMaterial4, boxMaterial5, boxMaterial6]
-        for material in boxGeometry.materials as! [SCNMaterial] {
-            material.doubleSided = false
-        }
-        
-        let cubeGeometry = SCNBox(width: 1.8, height: 1.8, length: 1, chamferRadius: 0)
-        
         // Grid
-        let gridNode = SCNNode()
-        
+        let gridNode = GridNode(width: 10, height: 6)
         rootNode.addChildNode(gridNode)
         
-        // Fill the grid with cells
-        let verticalCells = 10
-        let horizontalCells = 20
-        let cellLenght: Float = 2
-        for var v = 0; v < verticalCells; v++ {
-            for var h = 0; h < horizontalCells; h++ {
-                let boxNode = SCNNode(geometry: boxGeometry)
-                boxNode.position = SCNVector3(
-                    x: Float(h) * cellLenght + cellLenght/2,
-                    y: Float(v) * cellLenght + cellLenght/2 - Float(verticalCells)/2 * cellLenght,
-                    z: 0)
-                
-                let cubeNode = SCNNode(geometry: cubeGeometry)
-                cubeNode.position = SCNVector3(x: 0, y: 0, z: 0.1)
-                boxNode.addChildNode(cubeNode)
-                
-                gridNode.addChildNode(boxNode)
-            }
-        }
+        // Turn on lights
+//        gridNode.turnOnLightForCell(0, y: 0)
+        gridNode.turnOnLightForCell(0, y: 5)
+        gridNode.turnOnLightForCell(9, y: 0)
+        gridNode.turnOnLightForCell(9, y: 5)
         
-        let ambientLightNode = SCNNode()
-        ambientLightNode.light = SCNLight()
-        ambientLightNode.light!.type = SCNLightTypeDirectional
-        ambientLightNode.light!.color = UIColor(white: 0.5, alpha: 1.0)
-        ambientLightNode.position = SCNVector3(x: 0, y: 0, z: 100)
-        gridNode.addChildNode(ambientLightNode)
-        
-        // Adjust the grid's position
-        let gridMidPointX = -Float(horizontalCells)/2 * 2 + cellLenght/2
-        let gridMidPointY = -Float(verticalCells)/2 * 2 + cellLenght/2
-//        gridNode.position = SCNVector3(
-//            x: gridMidPointX,
-//            y: 0,
-//            z: 0)
-//        gridNode.pivot = SCNMatrix4Translate(
-//            SCNMatrix4Identity,
-//            Float(horizontalCells)/2 * cellLenght - cellLenght/2,
-//            Float(verticalCells)/2 * cellLenght - cellLenght/2,
-//            0)
-//        gridNode.transform = perspectiveRotation
+        // Test adding boxes to the grid
+        let node1 = SCNNode(geometry: SCNBox(width: 1, height: 1, length: 2, chamferRadius: 0))
+        let node2 = SCNNode(geometry: SCNBox(width: 1, height: 1, length: 2, chamferRadius: 0))
+        gridNode.putNodeOnCellAt(node1, x: 0, y: 0)
+        gridNode.putNodeOnCellAt(node2, x: 4, y: 0)
         
         // Camera
-        let camera = SCNCamera()
-        camera.zNear = -100
-        camera.zFar = 100
-        camera.orthographicScale = 10
-        camera.usesOrthographicProjection = true
-        let cameraNode = SCNNode()
-//        cameraNode.position = SCNVector3(
-//            x: cellLenght * 100,
-//            y: 0,
-//            z: 50)
-//        cameraNode.position = SCNVector3(x: cameraNode.position.x + movementVector.x, y: cameraNode.position.y + movementVector.y, z: cameraNode.position.z + movementVector.z)
-        cameraNode.camera = camera
-        
-        let perspectiveRotationX = SCNMatrix4MakeRotation(135*PI/180, 1, 0, 0)
-        let perspectiveRotationY = SCNMatrix4MakeRotation(0*PI/180, 0, 1, 0)
-        let perspectiveRotationZ = SCNMatrix4MakeRotation(60*PI/180, 0, 0, 1)
-        let perspectiveRotation = SCNMatrix4Mult(SCNMatrix4Mult(perspectiveRotationX, perspectiveRotationY) , perspectiveRotationZ)
-        
-        cameraNode.transform = perspectiveRotation
-        cameraNode.position = SCNVector3(x: cellLenght * 0, y: 0, z: 0)
-        
-        let action = SCNAction.moveBy(SCNVector3(x: cellLenght * 20, y: 0, z: 0), duration: 4)
-        cameraNode.runAction(action)
-        
-        rootNode.addChildNode(cameraNode)
+        rootNode.addChildNode(CameraNode())
         
         sceneView.scene = scene
-        println(view.frame)
         
 //        // Geometry
 //        let boxGeometry = SCNBox(width: 1, height: 1, length: 1, chamferRadius: 0)

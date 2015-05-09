@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2EA634CA1AFE61F500ADAFE0 /* CellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA634C91AFE61F500ADAFE0 /* CellNode.swift */; };
+		2EA634CE1AFE66DA00ADAFE0 /* GridNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA634CD1AFE66DA00ADAFE0 /* GridNode.swift */; };
+		2EA634D01AFE701400ADAFE0 /* CameraNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA634CF1AFE701400ADAFE0 /* CameraNode.swift */; };
 		2EC6F2761AEF9C33007EF451 /* GeometryInterpreter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC6F2751AEF9C33007EF451 /* GeometryInterpreter.swift */; };
 		2EDAEA0C1AEC4B08007DA9C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDAEA0B1AEC4B08007DA9C3 /* AppDelegate.swift */; };
 		2EDAEA0E1AEC4B08007DA9C3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDAEA0D1AEC4B08007DA9C3 /* ViewController.swift */; };
@@ -27,6 +30,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2EA634C91AFE61F500ADAFE0 /* CellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellNode.swift; sourceTree = "<group>"; };
+		2EA634CD1AFE66DA00ADAFE0 /* GridNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridNode.swift; sourceTree = "<group>"; };
+		2EA634CF1AFE701400ADAFE0 /* CameraNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraNode.swift; sourceTree = "<group>"; };
 		2EC6F2751AEF9C33007EF451 /* GeometryInterpreter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeometryInterpreter.swift; sourceTree = "<group>"; };
 		2EDAEA061AEC4B08007DA9C3 /* Designer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Designer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EDAEA0A1AEC4B08007DA9C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -127,6 +133,9 @@
 			children = (
 				2EDAEA0F1AEC4B08007DA9C3 /* Main.storyboard */,
 				2EDAEA141AEC4B08007DA9C3 /* LaunchScreen.xib */,
+				2EA634C91AFE61F500ADAFE0 /* CellNode.swift */,
+				2EA634CD1AFE66DA00ADAFE0 /* GridNode.swift */,
+				2EA634CF1AFE701400ADAFE0 /* CameraNode.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -231,9 +240,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EA634D01AFE701400ADAFE0 /* CameraNode.swift in Sources */,
 				2EC6F2761AEF9C33007EF451 /* GeometryInterpreter.swift in Sources */,
 				2EDAEA0E1AEC4B08007DA9C3 /* ViewController.swift in Sources */,
+				2EA634CE1AFE66DA00ADAFE0 /* GridNode.swift in Sources */,
 				2EDAEA0C1AEC4B08007DA9C3 /* AppDelegate.swift in Sources */,
+				2EA634CA1AFE61F500ADAFE0 /* CellNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
